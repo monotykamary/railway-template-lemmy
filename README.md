@@ -1,5 +1,7 @@
 # Lemmy on Railway
 
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/lemmy?referralCode=ZqgrJ0)
+
 Production-oriented Railway template source for [Lemmy](https://join-lemmy.org/), a federated link aggregator and discussion platform.
 
 ## Architecture
