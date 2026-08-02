@@ -6,7 +6,7 @@ Deploy a production-ready **Lemmy** instance on Railway. Lemmy is an open-source
 
 A Lemmy deployment needs an API and federation server, server-rendered web UI, PostgreSQL database, persistent image service, and a shared public origin. This template provisions those components as five Railway services connected through private networking. Only the Proxy service is publicly exposed.
 
-The template pins matching Lemmy and Lemmy UI releases, generates independent administrator, media, and database secrets, and persists both application data and uploaded media across redeployments.
+The template pins Lemmy and Lemmy UI 0.19.20, Pict-rs 0.5.24, and Caddy 2.11.4. It generates independent administrator, media, and database secrets and persists both application data and uploaded media across redeployments.
 
 ## Why Deploy Lemmy on Railway?
 
@@ -29,15 +29,15 @@ The template pins matching Lemmy and Lemmy UI releases, generates independent ad
 
 The template includes every required server-side dependency:
 
-- **Lemmy** — API, federation, moderation, and background jobs
-- **Lemmy UI** — responsive server-rendered web interface
-- **Pict-rs** — persistent image uploads and thumbnails
+- **Lemmy 0.19.20** — API, federation, moderation, and background jobs
+- **Lemmy UI 0.19.20** — responsive server-rendered web interface
+- **Pict-rs 0.5.24** — persistent image uploads and thumbnails
 - **Postgres** — persistent application database
-- **Proxy** — one public HTTPS origin for UI, API, media, and federation
+- **Caddy 2.11.4 Proxy** — one public HTTPS origin for UI, API, media, and federation
 
 ### Deployment Dependencies
 
-No external database or object-storage account is required. Railway provisions two persistent volumes: one for PostgreSQL and one for Pict-rs media. The two small adapter images are public and versioned on GHCR; the remaining services use pinned upstream images.
+No external database or object-storage account is required. Railway provisions two persistent volumes: one for PostgreSQL and one for Pict-rs media. The two adapter images use the immutable `0.19.20-r2` release tag on GHCR; the remaining services use pinned upstream images.
 
 After deployment:
 

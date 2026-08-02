@@ -1,29 +1,29 @@
 :{$PORT:8080} {
-  encode zstd gzip
+	encode zstd gzip
 
-  header {
-    X-Content-Type-Options nosniff
-    X-Frame-Options SAMEORIGIN
-    Referrer-Policy same-origin
-    -Server
-  }
+	header {
+		X-Content-Type-Options nosniff
+		X-Frame-Options SAMEORIGIN
+		Referrer-Policy same-origin
+		-Server
+	}
 
-  @backend path /api/* /pictrs/* /feeds/* /nodeinfo/* /version /.well-known/*
-  handle @backend {
-    reverse_proxy http://{$LEMMY_PRIVATE_DOMAIN}:8536
-  }
+	@backend path /api/* /pictrs/* /feeds/* /nodeinfo/* /version /.well-known/*
+	handle @backend {
+		reverse_proxy http://{$LEMMY_PRIVATE_DOMAIN}:8536
+	}
 
-  @activity header_regexp Accept (?i)application/(activity|ld)\+json
-  handle @activity {
-    reverse_proxy http://{$LEMMY_PRIVATE_DOMAIN}:8536
-  }
+	@activity header_regexp Accept (?i)application/(activity|ld)\+json
+	handle @activity {
+		reverse_proxy http://{$LEMMY_PRIVATE_DOMAIN}:8536
+	}
 
-  @post method POST
-  handle @post {
-    reverse_proxy http://{$LEMMY_PRIVATE_DOMAIN}:8536
-  }
+	@post method POST
+	handle @post {
+		reverse_proxy http://{$LEMMY_PRIVATE_DOMAIN}:8536
+	}
 
-  handle {
-    reverse_proxy http://{$LEMMY_UI_PRIVATE_DOMAIN}:1234
-  }
+	handle {
+		reverse_proxy http://{$LEMMY_UI_PRIVATE_DOMAIN}:1234
+	}
 }
