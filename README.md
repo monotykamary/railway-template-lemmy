@@ -6,8 +6,8 @@ Production-oriented Railway template source for [Lemmy](https://join-lemmy.org/)
 
 ## Architecture
 
-- **Lemmy** — API, federation, and background jobs, pinned to 0.19.20
-- **Lemmy UI** — server-rendered web interface, pinned to 0.19.20
+- **Lemmy** — API, federation, and background jobs, pinned to 0.19.21
+- **Lemmy UI** — server-rendered web interface, pinned to 0.19.21
 - **Pict-rs** — persistent image storage, pinned to 0.5.24
 - **Postgres** — Railway-managed persistent database
 - **Proxy** — Caddy 2.11.4 edge service routing UI, API, ActivityPub, and image traffic through one public origin
