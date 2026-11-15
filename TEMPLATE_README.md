@@ -6,7 +6,7 @@ Deploy a production-ready **Lemmy** instance on Railway. Lemmy is an open-source
 
 A Lemmy deployment needs an API and federation server, server-rendered web UI, PostgreSQL database, persistent image service, and a shared public origin. This template provisions those components as five Railway services connected through private networking. Only the Proxy service is publicly exposed.
 
-The template pins Lemmy and Lemmy UI 0.19.20, Pict-rs 0.5.24, and Caddy 2.11.4. It generates independent administrator, media, and database secrets and persists both application data and uploaded media across redeployments.
+The template pins Lemmy and Lemmy UI 0.19.21, Pict-rs 0.5.25, and Caddy 2.11.4. It generates independent administrator, media, and database secrets and persists both application data and uploaded media across redeployments.
 
 ## Why Deploy Lemmy on Railway?
 
@@ -29,15 +29,15 @@ The template pins Lemmy and Lemmy UI 0.19.20, Pict-rs 0.5.24, and Caddy 2.11.4. 
 
 The template includes every required server-side dependency:
 
-- **Lemmy 0.19.20** — API, federation, moderation, and background jobs
-- **Lemmy UI 0.19.20** — responsive server-rendered web interface
-- **Pict-rs 0.5.24** — persistent image uploads and thumbnails
+- **Lemmy 0.19.21** — API, federation, moderation, and background jobs
+- **Lemmy UI 0.19.21** — responsive server-rendered web interface
+- **Pict-rs 0.5.25** — persistent image uploads and thumbnails
 - **Postgres** — persistent application database
 - **Caddy 2.11.4 Proxy** — one public HTTPS origin for UI, API, media, and federation
 
 ### Deployment Dependencies
 
-No external database or object-storage account is required. Railway provisions two persistent volumes: one for PostgreSQL and one for Pict-rs media. The two adapter images use the immutable `0.19.20-r2` release tag on GHCR; the remaining services use pinned upstream images.
+No external database or object-storage account is required. Railway provisions two persistent volumes: one for PostgreSQL and one for Pict-rs media. The Lemmy service builds from the pinned wrapper source using the official upstream runtime image. Lemmy UI, PostgreSQL, Pict-rs, and the existing Caddy proxy adapter use digest-pinned images; the proxy adapter is unchanged by this application update.
 
 After deployment:
 
@@ -48,6 +48,12 @@ After deployment:
 5. Optionally attach a custom domain to Proxy.
 
 Choose the final domain before building a public community. ActivityPub identities are tied to the instance hostname and cannot be migrated by simply changing domains.
+
+## Upgrade precautions and validation scope
+
+Back up PostgreSQL and the Pict-rs media volume and retain the generated secrets before upgrading. Keep Lemmy and Lemmy UI on matching versions. The 0.19.20-to-0.19.21 checks preserved the original administrator, community, post, and the originally retrieved image bytes across upgrade and redeployment. Restore matching backups if rolling back a schema change.
+
+The English UI, authentication failures, media retrieval, and local ActivityPub/WebFinger endpoints were checked. End-to-end delivery to another federated instance was not tested. Two inherited Chinese (`zh`) locale startup diagnostics remain; Chinese-language behavior was not validated, and the warnings are not represented as fixed by this release.
 
 ## Source and Documentation
 
